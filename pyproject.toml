@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "focus-mode"
+version = "0.0.1"
+authors = [
+  { name="Gurjaka", email="esartia.gurika@gmail.com" },
+]
+description = "A productivity tool that automatically sets your Discord status to 'Do Not Disturb' when Neovim is active, sends auto-replies to incoming messages, and blocks distracting websites to maintain focus during coding sessions."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "requests>=2.31",
+    "python-dateutil>=2.8",
+    "tomli>=2.0",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: POSIX :: Linux",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Utilities",
+    "Intended Audience :: Developers",
+]
+keywords = ["productivity", "discord", "focus", "time-management"]
+
+[project.urls]
+Homepage = "https://github.com/Gurjaka/focus-mode"
+Documentation = "https://github.com/Gurjaka/focus-mode/blob/main/README.md"
+Issues = "https://github.com/Gurjaka/focus-mode/issues"
+Source = "https://github.com/Gurjaka/focus-mode"
+
+[project.scripts]
+focus-mode = "focus_mode.cli:main"
