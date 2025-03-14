@@ -1,5 +1,5 @@
 import subprocess
-from classes.config import *
+from core.config import *
 
 
 class FocusEnforcer:

@@ -17,6 +17,12 @@
   in {
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
+    packages = forAllSystems (pkgs: {
+      default = self.packages.${pkgs.system}.focus-mode;
+
+      focus-mode = pkgs.python3Packages.callPackage ./default.nix {};
+    });
+
     devShells = forAllSystems (
       pkgs: let
         python-deps = ps:

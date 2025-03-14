@@ -35,4 +35,4 @@ Issues = "https://github.com/Gurjaka/focus-mode/issues"
 Source = "https://github.com/Gurjaka/focus-mode"
 
 [project.scripts]
-focus-mode = "focus_mode.cli:main"
+focus-mode = "core.main:main"

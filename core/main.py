@@ -1,8 +1,8 @@
 import time
 import subprocess
-from classes.config import *
-from classes.discord import *
-from classes.focus import *
+from core.config import *
+from core.discord import *
+from core.focus import *
 
 
 def is_nvim_running() -> bool:
@@ -25,6 +25,7 @@ def main():
                 discord.set_status(config.settings["status_dnd"])
                 discord.check_messages()
                 enforcer.block_websites()
+                time.sleep(2)
             else:
                 discord.set_status(config.settings["status_normal"])
                 enforcer.unblock_websites()

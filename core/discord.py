@@ -1,8 +1,7 @@
 import datetime
 import requests
-import time
 from dateutil import parser
-from classes.config import *
+from core.config import *
 
 
 class DiscordManager:
@@ -151,6 +150,5 @@ class DiscordManager:
             resp.raise_for_status()
             self.replied_messages.add(message["id"])
             logger.info(f"Replied to message from {message['author']['username']}")
-            time.sleep(2)
         except requests.RequestException as e:
             logger.error(f"Failed to send reply: {e}")
