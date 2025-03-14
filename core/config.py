@@ -23,23 +23,13 @@ class ConfigManager:
 [discord]
 token = ""  # Get from Discord website (Ctrl+Shift+I -> Filter science -> Copy Authorization)
 
-[blocklist]
-websites = [
-    "reddit.com",
-    "www.reddit.com",
-    "twitter.com",
-    "www.twitter.com",
-    "facebook.com",
-    "www.facebook.com",
-]
-
 [settings]
 check_interval = 1  # Seconds between checks
 status_dnd = "dnd"
 status_normal = "online"
 reply_message = "I'm focusing right now - I'll reply later! 🚀"
 max_message_age = 300  # 5 minutes in seconds
-your_reply_window = 305  # Don't auto-reply if you've replied within this many seconds
+your_reply_window = 300  # Don't auto-reply if you've replied within this many seconds
     """
 
     def __init__(self):
