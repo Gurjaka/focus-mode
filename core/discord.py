@@ -74,6 +74,9 @@ class DiscordManager:
             resp.raise_for_status()
             logger.info(f"Status updated to {status}")
             self.current_status = status
+            # Reset replied channels when transitioning from DND to normal
+            if self.current_status == self.config.settings["status_normal"]:
+                self._reset_replied_channels()
             return True
         except requests.RequestException as e:
             logger.error(f"Status update failed: {e}")
@@ -82,11 +85,6 @@ class DiscordManager:
     def check_messages(self):
         """Check for new messages and reply if needed"""
         try:
-            # Reset replied channels if no longer in focus mode
-            if self.current_status != "dnd":
-                self._reset_replied_channels()
-                return
-
             channels = requests.get(
                 f"{self.base_url}/users/@me/channels", headers=self.headers
             ).json()
