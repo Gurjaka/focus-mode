@@ -29,6 +29,7 @@ def main():
             time.sleep(config.settings["check_interval"])
 
     threading.Thread(target=dm_check_loop, daemon=True).start()
+
     try:
         while True:
             if is_indicator_running():
