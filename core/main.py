@@ -4,9 +4,13 @@ from core.config import *
 from core.discord import *
 
 
-def is_nvim_running() -> bool:
+def is_indicator_running() -> bool:
+    config = ConfigManager()
     try:
-        result = subprocess.run(["pgrep", "nvim"], capture_output=True, text=True)
+        indicator = config.focus_indicator
+        result = subprocess.run(
+            ["pgrep", f"{indicator}"], capture_output=True, text=True
+        )
         return result.returncode == 0
     except subprocess.SubprocessError as e:
         logger.error(f"Process check failed: {e}")
@@ -19,7 +23,7 @@ def main():
 
     try:
         while True:
-            if is_nvim_running():
+            if is_indicator_running():
                 discord.set_status(config.settings["status_dnd"])
                 discord.check_messages()
             else:

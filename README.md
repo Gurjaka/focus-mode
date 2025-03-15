@@ -76,6 +76,7 @@ edit `~/.config/focus-mode/config.toml`:
 [discord]
 token = "your_token_here"  # 🔑 Get from Discord client (Ctrl+Shift+I -> Filter science -> Copy Authorization)
 [settings]
+focus_indicator = "nvim"  # App that indicates focus mode (nvim by default)
 check_interval = 1  # Seconds between checks
 status_dnd = "dnd"
 status_normal = "online"

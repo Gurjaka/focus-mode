@@ -1,6 +1,6 @@
 import logging
 import tomli
-from typing import Set, Dict
+from typing import Dict
 from pathlib import Path
 
 CONFIG_DIR = Path.home() / ".config" / "focus-mode"
@@ -24,6 +24,7 @@ class ConfigManager:
 token = ""  # Get from Discord website (Ctrl+Shift+I -> Filter science -> Copy Authorization)
 
 [settings]
+focus_indicator = "nvim"  # App that indicates focus mode (nvim by default)
 check_interval = 1  # Seconds between checks
 status_dnd = "dnd"
 status_normal = "online"
@@ -69,3 +70,7 @@ your_reply_window = 300  # Don't auto-reply if you've replied within this many s
     @property
     def settings(self) -> Dict:
         return self.config["settings"]
+
+    @property
+    def focus_indicator(self) -> str:
+        return self.config["settings"]["focus_indicator"]
