@@ -1,3 +1,4 @@
+import threading
 import time
 import subprocess
 from core.config import *
@@ -21,11 +22,17 @@ def main():
     config = ConfigManager()
     discord = DiscordManager(config)
 
+    def dm_check_loop():
+        while True:
+            if discord.current_status == config.settings["status_dnd"]:
+                discord.check_messages()
+            time.sleep(config.settings["check_interval"])
+
+    threading.Thread(target=dm_check_loop, daemon=True).start()
     try:
         while True:
             if is_indicator_running():
                 discord.set_status(config.settings["status_dnd"])
-                discord.check_messages()
             else:
                 discord.set_status(config.settings["status_normal"])
 

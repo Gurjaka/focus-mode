@@ -24,7 +24,7 @@ class DiscordManager:
         self.replied_channels: Set[str] = set()
 
         # Load persistent state if available
-        self.state_file = "discord_state.json"
+        self.state_file = CONFIG_DIR / "discord_state.json"
         self._load_state()
 
         self.last_replies: Dict[str, datetime.datetime] = {}
