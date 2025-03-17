@@ -56,13 +56,13 @@
     ];
     ```
 
-### Traditional distros
-
-    # Install with pip
-    pip install focus-mode
-
-    # Or get the bleeding edge version
-    pip install git+https://github.com/Gurjaka/focus-mode.git
+<!--### Traditional distros-->
+<!---->
+<!--    # Install with pip-->
+<!--    pip install focus-mode-->
+<!---->
+<!--    # Or get the bleeding edge version-->
+<!--    pip install git+https://github.com/Gurjaka/focus-mode.git-->
 
 ### Basic Usage
 ```bash
