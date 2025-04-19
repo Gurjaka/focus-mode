@@ -12,7 +12,7 @@
     supportedSystems = ["x86_64-linux"];
     forAllSystems = function:
       nixpkgs.lib.genAttrs supportedSystems (
-        system: function (import nixpkgs {inherit system;})
+        system: function nixpkgs.legacyPackages.${system}
       );
   in {
     formatter = forAllSystems (pkgs: pkgs.alejandra);
