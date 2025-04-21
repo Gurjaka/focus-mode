@@ -21,7 +21,7 @@ class ConfigManager:
 
     _default_config = """\
 [discord]
-token = ""  # Get from Discord website (Ctrl+Shift+I -> Network -> Filter science -> Copy Authorization)
+token = ""  # Get from Discord website (Ctrl+Shift+I -> Network -> Filter messages -> Copy Authorization)
 
 [settings]
 focus_indicator = "nvim"  # App that indicates focus mode (nvim by default)
