@@ -41,9 +41,6 @@
               black
             ];
           };
-        shellHook = ''
-          clear
-        '';
       }
     );
   };
