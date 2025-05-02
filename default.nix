@@ -26,7 +26,7 @@ buildPythonApplication rec {
   meta = {
     changelog = "https://github.com/Gurjaka/focus-mode";
     homepage = "https://github.com/Gurjaka/focus-mode";
-    description = "A productivity tool that automatically sets your Discord status to 'Do Not Disturb' when Neovim is active, sends auto-replies to incoming messages, and blocks distracting websites to maintain focus during coding sessions.";
+    description = "A productivity tool that automatically sets your Discord status to 'Do Not Disturb' when Neovim is active, and sends auto-replies to incoming messages.";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
       gurjaka
