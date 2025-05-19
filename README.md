@@ -2,14 +2,12 @@
 
 ## 🔒 Focus Mode - Your Coding Sanctuary 🚀
 
-![GitHub Repo stars](https://img.shields.io/github/stars/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac) ![GitHub last commit](https://img.shields.io/github/last-commit/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac) ![GitHub repo size](https://img.shields.io/github/repo-size/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac)
+<img alt="Focus Mode Icon" src="assets/logo.svg" width="200px"/>
 
 **Transform your workflow with automated focus enforcement**  
 *A smart assistant that protects your coding sessions by managing distractions and communications*
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<!--[![PyPI Version](https://img.shields.io/pypi/v/focus-mode?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/focus-mode/)-->
-<!--[![Build Status](https://img.shields.io/github/actions/workflow/status/Gurjaka/focus-mode/build.yml?logo=github)](https://github.com/Gurjaka/focus-mode/actions)-->
+![GitHub Repo stars](https://img.shields.io/github/stars/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac) ![GitHub last commit](https://img.shields.io/github/last-commit/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac) ![GitHub repo size](https://img.shields.io/github/repo-size/Gurjaka/focus-mode?style=for-the-badge&labelColor=2e3440&color=5e81ac)
 
 </div>
 
@@ -30,90 +28,115 @@
 
 ## 📥 Installation
 
-### NixOS or Home Manager
+### Flake based systems
+1. Add the input to your flake.nix:
+   ```nix
+   inputs = {
+     focus-mode.url = "github:Gurjaka/focus-mode";
+     ...
+   };
+   ```
+   
+#### NixOS
 
-1. Add the following to your `flake.nix`:
-
-    ```nix
-    inputs = {
-      focus-mode.url = "github:Gurjaka/focus-mode";
-      ...
-    }
-    ```
-
-2. Then, add Zen Browser to your packages:
-    > For system wide installation in *configuration.nix*
+1. Then, add Focus-Mode to your packages:
     ```nix
     environment.systemPackages = with pkgs; [
       inputs.focus-mode.packages."${system}".default
     ];
     ```
 
-    > For user level installation in *home.nix*
-    ```nix
-    home.packages = with pkgs; [
-      inputs.focus-mode.packages."${system}".default
-    ];
-    ```
+2. For configuration check following [🛠️ Instructions](#️-configuration-made-simple)
 
-<!--### Traditional distros-->
-<!---->
-<!--    # Install with pip-->
-<!--    pip install focus-mode-->
-<!---->
-<!--    # Or get the bleeding edge version-->
-<!--    pip install git+https://github.com/Gurjaka/focus-mode.git-->
+#### Home Manager
+
+1. Expose your focus-mode input to homeManagerModules:
+
+   ```nix
+   outputs = { self, nixpkgs, home-manager, focus-mode, ... }: {
+     homeConfigurations.your-user = home-manager.lib.homeManagerConfiguration {
+       ...
+       modules = [
+         focus-mode.homeManagerModules.default
+         ./home.nix
+       ];
+     };
+   };
+   ```
+
+2. Enable and configure in your home.nix:
+
+   ```nix
+   programs.focus-mode = {
+     enable = true;
+
+     # Use either token OR token file (tokenFile takes precedence)
+     discordToken = "your_token_here"; # ⚠️ Do not share this for your account's safety!
+     # discordTokenFile = "/run/agenix/discord_token";
+
+     focus_indicator = "nvim";
+     check_interval = "1";
+     status_dnd = "dnd";
+     status_normal = "online";
+     reply_message = "I'm coding right now - I'll reply later! 🚀";
+     max_message_age = "300";
+     your_reply_window = "300";
+   };
+   ```
+
+3. Apply the configuration:
+
+   ```sh
+   home-manager switch
+   ```
 
 ### Basic Usage
+
 ```bash
 focus-mode
 ```
 
 ## 🛠️ Configuration Made Simple
 
-edit `~/.config/focus-mode/config.toml`:
+If you're not using Home Manager, edit `~/.config/focus-mode/config.toml` manually:
+
 ```toml
 [discord]
-token = "your_token_here"  # 🔑 Get from Discord client (Ctrl+Shift+I -> Network -> Filter science -> Copy Authorization)
+token = "your_token_here"  # 🔑 Get from Discord client (Ctrl+Shift+I -> Network -> Filter messages -> Copy Authorization)
+
 [settings]
-focus_indicator = "nvim"  # App that indicates focus mode (nvim by default)
-check_interval = 1  # Seconds between checks
+focus_indicator = "nvim"  # App that indicates focus mode
+check_interval = 1
 status_dnd = "dnd"
 status_normal = "online"
 reply_message = "I'm coding right now - I'll reply later! 🚀"
-max_message_age = 300  # 5 minutes in seconds
-your_reply_window = 300 # Don't auto-reply if you've replied within this many seconds
+max_message_age = 300
+your_reply_window = 300
 ```
-
 
 ## 🌟 Why Developers Love This
 
-*"Finally stopped getting distracted by Discord DMs during coding sessions!" - Jane D. (Python Dev)*
+> "Finally stopped getting distracted by Discord DMs during coding sessions!"
+> — Jane D. (Python Dev)
 
-*"The auto-responder saved me from endless DM distractions" - Mike T. (Open Source Maintainer)*
+> "The auto-responder saved me from endless DM distractions"
+> — Mike T. (Open Source Maintainer)
 
 ## 🛣️ Roadmap
 
-- [ ] Website blocker integration
-- [ ] Browser extension integration
-- [ ] Slack/Teams support
-- [ ] Focus time analytics
-- [ ] Mobile app companion
-
-<!--## 🤝 Contributing-->
-<!---->
-<!--We welcome code warriors! Please read our:-->
-<!--- [Contribution Guidelines](CONTRIBUTING.md)-->
-<!--- [Code of Conduct](CODE_OF_CONDUCT.md)-->
-<!--- [Security Policy](SECURITY.md)-->
+* [ ] Website blocker integration
+* [ ] Browser extension integration
+* [ ] Slack/Teams support
+* [ ] Focus time analytics
+* [ ] Mobile app companion
 
 ## 📜 License
 
-MIT Licensed - See [LICENSE](LICENSE) for details
+MIT Licensed – See [LICENSE](LICENSE) for details
 
 ---
 
-**⚠️ Important Note:**  
-This project is not affiliated with Discord. Use of Discord tokens may violate Discord's Terms of Service - proceed at your own risk.
+⚠️ **Important Note:**
+This project is not affiliated with Discord. Use of Discord tokens may violate Discord's Terms of Service – proceed at your own risk.
 
-Made with ❤️  by Gurjaka
+Made with ❤️ by Gurjaka
