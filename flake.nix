@@ -1,5 +1,5 @@
 {
-  description = "Python development flake template";
+  description = "Focus Mode - Your coding sanctuary";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -22,6 +22,19 @@
 
       focus-mode = pkgs.python3Packages.callPackage ./default.nix {};
     });
+
+    homeManagerModules = {
+      default = {
+        lib,
+        config,
+        pkgs,
+        ...
+      }:
+        import ./modules.nix {
+          inherit lib config;
+          focus-mode = self.packages.${pkgs.system}.focus-mode;
+        };
+    };
 
     devShells = forAllSystems (
       pkgs: let
