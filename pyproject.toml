@@ -28,6 +28,9 @@ classifiers = [
 ]
 keywords = ["productivity", "discord", "focus", "time-management"]
 
+[tool.setuptools]
+packages = ["core"]
+
 [project.urls]
 Homepage = "https://github.com/Gurjaka/focus-mode"
 Documentation = "https://github.com/Gurjaka/focus-mode/blob/main/README.md"
