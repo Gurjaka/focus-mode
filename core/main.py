@@ -5,22 +5,33 @@ from core.config import *
 from core.discord import *
 
 
-def is_indicator_running() -> bool:
-    config = ConfigManager()
-    try:
-        indicator = config.focus_indicator
-        result = subprocess.run(
-            ["pgrep", f"{indicator}"], capture_output=True, text=True
-        )
-        return result.returncode == 0
-    except subprocess.SubprocessError as e:
-        logger.error(f"Process check failed: {e}")
-        return False
+def is_indicator_running(indicator) -> bool:
+    if indicator == None:
+        logger.error(f"Focus indicator not found! Exitting...")
+
+    for i in indicator:
+        try:
+            result = subprocess.run(["pgrep", f"{i}"], capture_output=True, text=True)
+            if result.returncode == 0:
+                return True
+        except subprocess.SubprocessError as e:
+            logger.error(f"Process check failed for {i}: {e}")
+            return False
+
+    return False
 
 
 def main():
     config = ConfigManager()
     discord = DiscordManager(config)
+    indicator = config.focus_indicator
+
+    if not isinstance(indicator, list) or not all(
+        isinstance(i, str) for i in indicator
+    ):
+        raise TypeError(
+            "focus_indicator must be a list of strings, e.g. ['nvim', 'zathura']"
+        )
 
     def dm_check_loop():
         while True:
@@ -32,7 +43,7 @@ def main():
 
     try:
         while True:
-            if is_indicator_running():
+            if is_indicator_running(indicator):
                 discord.set_status(config.settings["status_dnd"])
             else:
                 discord.set_status(config.settings["status_normal"])

@@ -2,6 +2,7 @@ import logging
 import tomli
 from typing import Dict, Optional
 from pathlib import Path
+from typing import Union
 
 CONFIG_DIR = Path.home() / ".config" / "focus-mode"
 LOG_DIR = Path.home() / ".local" / "log"
@@ -25,16 +26,13 @@ token = ""  # Get from Discord website (Ctrl+Shift+I -> Network -> Filter messag
 # token_file = ""  # Alternative: path to file containing token (for agenix integration)
 
 [settings]
-focus_indicator = "nvim"  # App that indicates focus mode (nvim by default)
+focus_indicator = ["nvim"]  # App(s) that indicates focus mode (nvim by default)
 check_interval = 1  # Seconds between checks
 status_dnd = "dnd"
 status_normal = "online"
-reply_message = "I'm focusing right now - I'll reply later! 🚀"
+reply_message = "I'm trying to focus now - I'll reply later! 🚀"
 max_message_age = 300  # 5 minutes in seconds
 your_reply_window = 300  # Don't auto-reply if you've replied within this many seconds
-
-[blocklist]
-websites = []  # List of websites to block during focus mode
     """
 
     def __init__(self):
@@ -111,5 +109,5 @@ websites = []  # List of websites to block during focus mode
         return self.config["settings"]
 
     @property
-    def focus_indicator(self) -> str:
+    def focus_indicator(self) -> Union[str, list]:
         return self.config["settings"]["focus_indicator"]

@@ -17,7 +17,7 @@
     ${tokenConfig}
 
     [settings]
-    focus_indicator = "${cfg.focus_indicator}"
+    focus_indicator = ${"[" + lib.concatStringsSep ", " (map (x: "\"${x}\"") cfg.focus_indicator) + "]"}
     check_interval = ${toString cfg.check_interval}
     status_dnd = "${cfg.status_dnd}"
     status_normal = "${cfg.status_normal}"
@@ -51,10 +51,17 @@ in {
     };
 
     focus_indicator = lib.mkOption {
-      type = lib.types.str;
+      type = lib.types.listOf lib.types.str;
       default = "nvim";
+      example = [
+        "nvim"
+        "code"
+        ".zathura"
+        "gimp"
+        "libreoffice"
+      ];
       description = ''
-        App that indicates focus mode (nvim by default)
+        App(s) that indicates focus mode (nvim by default)
       '';
     };
 

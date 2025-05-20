@@ -72,13 +72,17 @@
 
      # Use either token OR token file (tokenFile takes precedence)
      discordToken = "your_token_here"; # ⚠️ Do not share this for your account's safety!
+     
+     # In case you use Agenix encryption, this is safer way
      # discordTokenFile = "/run/agenix/discord_token";
 
-     focus_indicator = "nvim";
+     focus_indicator = [
+       "nvim"
+     ];
      check_interval = "1";
      status_dnd = "dnd";
-     status_normal = "online";
-     reply_message = "I'm coding right now - I'll reply later! 🚀";
+     status_normal = "idle";
+     reply_message = "I'm trying to focus now - I'll reply later! 🚀";
      max_message_age = "300";
      your_reply_window = "300";
    };
