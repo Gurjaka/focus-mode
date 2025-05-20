@@ -107,13 +107,15 @@ If you're not using Home Manager, edit `~/.config/focus-mode/config.toml` manual
 ```toml
 [discord]
 token = "your_token_here"  # 🔑 Get from Discord client (Ctrl+Shift+I -> Network -> Filter messages -> Copy Authorization)
+# In case you are using any type of encryption, this is safer way
+# tokenFile = "/run/agenix/discord_token"  # Recommended if using Agenix or secret managers
 
 [settings]
-focus_indicator = "nvim"  # App that indicates focus mode
+focus_indicator = ["nvim"]  # App that indicates focus mode
 check_interval = 1
 status_dnd = "dnd"
 status_normal = "online"
-reply_message = "I'm coding right now - I'll reply later! 🚀"
+reply_message = "I'm trying to focus now - I'll reply later! 🚀"
 max_message_age = 300
 your_reply_window = 300
 ```
