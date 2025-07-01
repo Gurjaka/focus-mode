@@ -7,7 +7,7 @@ from core.discord import *
 
 def is_indicator_running(indicator) -> bool:
     if indicator == None:
-        logger.error(f"Focus indicator not found! Exitting...")
+        logger.error("Focus indicator not found! Exitting...")
 
     for i in indicator:
         try:
@@ -19,6 +19,10 @@ def is_indicator_running(indicator) -> bool:
             return False
 
     return False
+
+def set_dnd_flag(value: bool):
+    with open("/tmp/dnd_flag", "w") as f:
+        f.write("true" if value else "false")
 
 
 def main():
@@ -44,8 +48,10 @@ def main():
     try:
         while True:
             if is_indicator_running(indicator):
+                set_dnd_flag(True)
                 discord.set_status(config.settings["status_dnd"])
             else:
+                set_dnd_flag(False)
                 discord.set_status(config.settings["status_normal"])
 
             time.sleep(config.settings["check_interval"])
