@@ -1,8 +1,7 @@
 import logging
-import tomli
-from typing import Dict, Optional
 from pathlib import Path
-from typing import Union
+
+import tomli
 
 CONFIG_DIR = Path.home() / ".config" / "focus-mode"
 LOG_DIR = Path.home() / ".local" / "log"
@@ -46,9 +45,11 @@ your_reply_window = 300  # Don't auto-reply if you've replied within this many s
             self.config_path.write_text(self._default_config)
             self.config_path.chmod(0o600)
             logger.info(f"Created default config at {self.config_path}")
-            raise SystemExit("Please configure your Discord token and settings")
+            raise SystemExit(
+                "Please configure your Discord token and settings"
+            )
 
-    def _load_config(self) -> Dict:
+    def _load_config(self) -> dict:
         try:
             with open(self.config_path, "rb") as f:
                 config = tomli.load(f)
@@ -65,13 +66,15 @@ your_reply_window = 300  # Don't auto-reply if you've replied within this many s
             logger.error(f"Invalid config: {e}")
             raise SystemExit(1) from None
 
-    def _validate_token_config(self, discord_config: Dict):
+    def _validate_token_config(self, discord_config: dict):
         """Validate that token configuration is valid"""
         has_token = bool(discord_config.get("token", ""))
         has_token_file = bool(discord_config.get("token_file", ""))
 
         if not has_token and not has_token_file:
-            raise ValueError("No Discord token or token_file specified in config")
+            raise ValueError(
+                "No Discord token or token_file specified in config"
+            )
 
         # If token_file is specified, check that it exists and is readable
         if has_token_file:
@@ -105,9 +108,9 @@ your_reply_window = 300  # Don't auto-reply if you've replied within this many s
         return discord_config.get("token", "")
 
     @property
-    def settings(self) -> Dict:
+    def settings(self) -> dict:
         return self.config["settings"]
 
     @property
-    def focus_indicator(self) -> Union[str, list]:
+    def focus_indicator(self) -> str | list:
         return self.config["settings"]["focus_indicator"]

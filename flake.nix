@@ -18,7 +18,7 @@
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
     packages = forAllSystems (pkgs: {
-      default = self.packages.${pkgs.system}.focus-mode;
+      default = self.packages.${pkgs.stdenv.hostPlatform.system}.focus-mode;
 
       focus-mode = pkgs.python3Packages.callPackage ./default.nix {};
     });
@@ -32,25 +32,20 @@
       }:
         import ./modules.nix {
           inherit lib config;
-          focus-mode = self.packages.${pkgs.system}.focus-mode;
+          focus-mode = self.packages.${pkgs.stdenv.hostPlatform.system}.focus-mode;
         };
     };
 
     devShells = forAllSystems (
-      pkgs: let
-        python-deps = ps:
-          with ps; [
-            pip
-            requests
-            tomli
-            python-dateutil
-          ];
-      in {
+      pkgs: {
         default =
           pkgs.mkShell
           {
-            packages = with pkgs; [
-              (python3.withPackages python-deps)
+            packages = with pkgs.python3Packages; [
+              pip
+              requests
+              tomli
+              python-dateutil
               black
             ];
           };

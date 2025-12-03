@@ -1,6 +1,7 @@
+import subprocess
 import threading
 import time
-import subprocess
+
 from core.config import *
 from core.discord import *
 
@@ -11,7 +12,9 @@ def is_indicator_running(indicator) -> bool:
 
     for i in indicator:
         try:
-            result = subprocess.run(["pgrep", f"{i}"], capture_output=True, text=True)
+            result = subprocess.run(
+                ["pgrep", f"{i}"], capture_output=True, text=True
+            )
             if result.returncode == 0:
                 return True
         except subprocess.SubprocessError as e:
@@ -19,6 +22,7 @@ def is_indicator_running(indicator) -> bool:
             return False
 
     return False
+
 
 def set_dnd_flag(value: bool):
     with open("/tmp/dnd_flag", "w") as f:

@@ -1,9 +1,10 @@
 import datetime
-import requests
-import os
 import json
+import os
+
+import requests
 from dateutil import parser
-from typing import Dict, Set
+
 from core.config import *
 
 
@@ -21,17 +22,19 @@ class DiscordManager:
         self.current_status = None
 
         # Track replied conversations, not just messages
-        self.replied_channels: Set[str] = set()
+        self.replied_channels: set[str] = set()
 
         # Load persistent state if available
         self.state_file = CONFIG_DIR / "discord_state.json"
         self._load_state()
 
-        self.last_replies: Dict[str, datetime.datetime] = {}
+        self.last_replies: dict[str, datetime.datetime] = {}
 
     def _get_user_id(self) -> str:
         try:
-            resp = requests.get(f"{self.base_url}/users/@me", headers=self.headers)
+            resp = requests.get(
+                f"{self.base_url}/users/@me", headers=self.headers
+            )
             resp.raise_for_status()
             return resp.json()["id"]
         except requests.RequestException as e:
@@ -42,9 +45,11 @@ class DiscordManager:
         """Load persistent state from file"""
         try:
             if os.path.exists(self.state_file):
-                with open(self.state_file, "r") as f:
+                with open(self.state_file) as f:
                     state = json.load(f)
-                    self.replied_channels = set(state.get("replied_channels", []))
+                    self.replied_channels = set(
+                        state.get("replied_channels", [])
+                    )
                     logger.debug(
                         f"Loaded state with {len(self.replied_channels)} replied channels"
                     )
@@ -101,7 +106,9 @@ class DiscordManager:
     def _reset_replied_channels(self):
         """Reset the replied channels when exiting focus mode"""
         if self.replied_channels:
-            logger.info(f"Resetting {len(self.replied_channels)} replied channels")
+            logger.info(
+                f"Resetting {len(self.replied_channels)} replied channels"
+            )
             self.replied_channels.clear()
             self._save_state()
 
@@ -155,9 +162,11 @@ class DiscordManager:
                     )
                     break
         except requests.RequestException as e:
-            logger.error(f"Failed to check your replies in channel {channel_id}: {e}")
+            logger.error(
+                f"Failed to check your replies in channel {channel_id}: {e}"
+            )
 
-    def _should_reply(self, msg: Dict, channel_id: str) -> bool:
+    def _should_reply(self, msg: dict, channel_id: str) -> bool:
         """Determine if a message should receive an auto-reply"""
         try:
             # Basic conditions
@@ -166,7 +175,8 @@ class DiscordManager:
                     msg["author"]["id"] != self.user_id,
                     self._is_recent(msg["timestamp"]),
                     not any(
-                        mention.get("bot", False) for mention in msg.get("mentions", [])
+                        mention.get("bot", False)
+                        for mention in msg.get("mentions", [])
                     ),
                 ]
             ):
@@ -174,8 +184,10 @@ class DiscordManager:
 
             # Check if you've replied recently to this channel outside of focus mode
             if channel_id in self.last_replies:
-                now = datetime.datetime.now(datetime.timezone.utc)
-                time_since_reply = (now - self.last_replies[channel_id]).total_seconds()
+                now = datetime.datetime.now(datetime.UTC)
+                time_since_reply = (
+                    now - self.last_replies[channel_id]
+                ).total_seconds()
 
                 # Don't auto-reply if you've replied within the configured window
                 your_reply_window = self.config.settings.get(
@@ -195,13 +207,15 @@ class DiscordManager:
         """Check if a message is recent enough to warrant a reply"""
         try:
             msg_time = parser.parse(timestamp)
-            delta = datetime.datetime.now(datetime.timezone.utc) - msg_time
-            return delta.total_seconds() < self.config.settings["max_message_age"]
+            delta = datetime.datetime.now(datetime.UTC) - msg_time
+            return (
+                delta.total_seconds() < self.config.settings["max_message_age"]
+            )
         except parser.ParserError as e:
             logger.error(f"Invalid timestamp {timestamp}: {e}")
             return False
 
-    def _send_reply(self, channel_id: str, message: Dict):
+    def _send_reply(self, channel_id: str, message: dict):
         """Send a reply to a message"""
         try:
             resp = requests.post(
@@ -210,6 +224,8 @@ class DiscordManager:
                 headers=self.headers,
             )
             resp.raise_for_status()
-            logger.info(f"Replied to message from {message['author']['username']}")
+            logger.info(
+                f"Replied to message from {message['author']['username']}"
+            )
         except requests.RequestException as e:
             logger.error(f"Failed to send reply: {e}")

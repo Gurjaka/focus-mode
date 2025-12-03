@@ -39,3 +39,41 @@ Source = "https://github.com/Gurjaka/focus-mode"
 
 [project.scripts]
 focus-mode = "core.main:main"
+
+
+[tool.ruff]
+line-length = 79
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+	"F",       # pyflakes
+	"E",       # pycodestyle errors
+	"W",       # pycodestyle warnings
+	"I",       # isort
+	"N",       # pep8-naming
+	"G",       # flake8-logging-format
+	"PIE",     # flake8-pie
+	"UP",      # pyupgrade
+]
+
+ignore = [
+    "E501",    # ignore due to conflict with formatter
+    "N818",    # exceptions don't need the Error suffix
+    "E741",    # allow ambiguous variable names
+]
+
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"stubs/*" = [
+    "N",       # naming conventions don't matter in stubs
+    "F403",    # star imports are okay in stubs
+    "F405",    # star imports are okay in stubs
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
