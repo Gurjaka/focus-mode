@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This project has migrated to Codeberg:** [codeberg.org/Gurjaka/focus-mode](https://codeberg.org/Gurjaka/focus-mode)
+>
+> From now on, it will only receive updates, issues, and pull requests on Codeberg. This GitHub repository is now **archived and read-only**.
+
 <div align="center">
 
 ## 🔒 Focus Mode - Your Coding Sanctuary 🚀
